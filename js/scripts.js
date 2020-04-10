@@ -1,5 +1,6 @@
-const display =  document.getElementById("display"); 
+const display =  document.querySelector("#display"); 
 const numButtons = document.querySelectorAll('.number');
+const clearButton = document.querySelector("#clearBtn");
 
 let selectedNum = [];
 
@@ -11,6 +12,10 @@ numButtons.forEach(button => {
     });
     
 });
+
+clearButton.addEventListener('click', clearValues);
+
+
 
 document.addEventListener('DOMContentLoaded', (event) => {
     display.value = "";
@@ -24,6 +29,7 @@ function populateDisplay(){
 function clearValues(){
     display.value = "";
     display.textContent = "";
+    selectedNum = [];
 }
 
 
