@@ -1,3 +1,36 @@
+const display =  document.getElementById("display"); 
+const numButtons = document.querySelectorAll('.number');
+
+let selectedNum = [];
+
+
+numButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+         selectedNum.push(event.target.textContent);
+         populateDisplay();
+    });
+    
+});
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    display.value = "";
+});
+
+function populateDisplay(){
+    display.value = selectedNum.join("");
+    display.textContent = selectedNum.join("");
+}
+
+function clearValues(){
+    display.value = "";
+    display.textContent = "";
+}
+
+
+
+
+
+
 function add(a,b){
     return a+b;
 }
