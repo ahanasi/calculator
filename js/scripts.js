@@ -15,8 +15,6 @@ numButtons.forEach(button => {
 
 clearButton.addEventListener('click', clearValues);
 
-
-
 document.addEventListener('DOMContentLoaded', (event) => {
     display.value = "";
 });
