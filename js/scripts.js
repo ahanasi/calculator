@@ -22,8 +22,6 @@ keys.addEventListener('click', (e) => {
 
     if(target.matches('.operator')){
         operatorFunction(target.textContent);
-
-        
     }
 
     if(target.matches('#clearBtn')){
@@ -31,7 +29,18 @@ keys.addEventListener('click', (e) => {
         populateDisplay();
     }
 
+    if(target.matches('.decimal')){
+        addDecimal();
+        populateDisplay();
+    }
+
 });
+
+function addDecimal(){
+    if((Math.floor(calculator.displayValue) == calculator.displayValue && !calculator.displayValue.includes('.'))){
+        calculator.displayValue += '.';
+    }
+}
 
 function clearCalc(){
     calculator.displayValue = '0';
