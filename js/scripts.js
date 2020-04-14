@@ -65,7 +65,7 @@ function operatorFunction(target){
         calculator.firstOp = result;
         
         (result == 'Infinity') ? calculator.displayValue = 'Error'
-            : calculator.displayValue = result;
+            : calculator.displayValue = Math.round((result + Number.EPSILON) * 10000000000) / 10000000000;
         
         populateDisplay();
     } 
