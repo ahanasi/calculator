@@ -1,8 +1,5 @@
-const display =  document.querySelector("#display"); 
-const numButtons = document.querySelectorAll('.number');
-const clearButton = document.querySelector("#clearBtn");
-const operators = document.querySelectorAll(".operator");
-const eql = document.querySelector("#equals");
+const display =  document.querySelector("#display");
+const keys = document.querySelector(".calc-keys");
 const calculator = {
     displayValue: '0',
     firstOp: null,
@@ -10,44 +7,73 @@ const calculator = {
     operator: null,
 }
 
+keys.addEventListener('click', (e) => {
 
+    const {target} = e;
 
+    if(!target.matches('button')){
+        return;
+    }
 
+    if(target.matches('.number')){
+        numInput(target.textContent);
+        populateDisplay();
+    }
 
-numButtons.forEach(button => {
-    button.addEventListener('click', (e) => {
-         displayValue.push(event.target.textContent);
-         populateDisplay();
-    });   
-});
-
-operators.forEach(operator => {
-    operator.addEventListener('click', (e) => {
+    if(target.matches('.operator')){
+        operatorFunction(target.textContent);
         
-    });
-    
+    }
+
+    if(target.matches('#clearBtn')){
+        clearCalc();
+        populateDisplay();
+    }
+
 });
 
-
-
-clearButton.addEventListener('click', clearValues);
-
-eql.addEventListener('click', (opt,a,b) => {
-    calculateResult(opt,a,b);
-    populateDisplay();
-});
-
-document.addEventListener('DOMContentLoaded', (event) => {
-    display.value = "0";
-});
-
-function populateDisplay(){
-    display.value = displayValue.join("");
-    display.textContent = displayValue.join("");
+function clearCalc(){
+    calculator.displayValue = '0';
+    calculator.firstOp = null;
+    calculator.isSecondOp = false;
+    calculator.operator = null;
 }
 
-function clearValues(){
-   
+function operatorFunction(target){
+
+    const inputVal = calculator.displayValue;
+    
+    if (calculator.operator && calculator.isSecondOp){
+        calculator.operator = target;
+        return;
+    }
+
+    if(calculator.firstOp === null){
+        calculator.firstOp = parseFloat(inputVal);
+    } else if (calculator.operator){
+        const result = operate(calculator.operator, calculator.firstOp, inputVal);
+        calculator.firstOp = result;
+        calculator.displayValue = result;
+        populateDisplay();
+    } 
+
+    calculator.isSecondOp = !calculator.isSecondOp;
+    calculator.operator = target;           
+    return;
+}
+
+
+function numInput(num){
+    if (calculator.isSecondOp){
+        calculator.displayValue = '0';
+        calculator.isSecondOp = !calculator.isSecondOp;
+    }
+    calculator.displayValue = (calculator.displayValue === '0') ? num : calculator.displayValue + num;
+}
+
+
+function populateDisplay(){
+    display.value = calculator.displayValue;
 }
 
 function add(a,b){
@@ -70,5 +96,6 @@ function operate(op,num1,num2){
    return (op == "+") ? add(num1,num2) 
         : (op == "−") ? subtract(num1,num2)
         : (op == "×") ? multiply(num1,num2)
-        : divide(num1,num2); 
+        : (op == "÷") ? divide(num1,num2)
+        : num2;
 }
