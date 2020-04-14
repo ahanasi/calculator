@@ -22,6 +22,8 @@ keys.addEventListener('click', (e) => {
 
     if(target.matches('.operator')){
         operatorFunction(target.textContent);
+        resetClass();
+        changeBrCol(target.classList);
     }
 
     if(target.matches('#clearBtn')){
@@ -35,6 +37,18 @@ keys.addEventListener('click', (e) => {
     }
 
 });
+
+function resetClass(){
+    let opt = document.querySelectorAll('.operator');
+    for (i=0; i < opt.length; i++){
+        opt[i].classList.remove('clickState');
+    }
+}
+
+function changeBrCol(list){
+    
+    list.add('clickState');    
+}
 
 function addDecimal(){
     if((Math.floor(calculator.displayValue) == calculator.displayValue && !calculator.displayValue.includes('.'))){
