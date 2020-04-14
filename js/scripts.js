@@ -22,6 +22,7 @@ keys.addEventListener('click', (e) => {
 
     if(target.matches('.operator')){
         operatorFunction(target.textContent);
+
         
     }
 
@@ -42,7 +43,7 @@ function clearCalc(){
 function operatorFunction(target){
 
     const inputVal = calculator.displayValue;
-    
+
     if (calculator.operator && calculator.isSecondOp){
         calculator.operator = target;
         return;
@@ -53,7 +54,10 @@ function operatorFunction(target){
     } else if (calculator.operator){
         const result = operate(calculator.operator, calculator.firstOp, inputVal);
         calculator.firstOp = result;
-        calculator.displayValue = result;
+        
+        (result == 'Infinity') ? calculator.displayValue = 'Error'
+            : calculator.displayValue = result;
+        
         populateDisplay();
     } 
 
